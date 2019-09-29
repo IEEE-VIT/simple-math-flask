@@ -1,8 +1,8 @@
 /__pycache__
 
 
-# Created by https://www.gitignore.io/api/flask,python
-# Edit at https://www.gitignore.io/?templates=flask,python
+# Created by https://www.gitignore.io/api/flask,python,virtualenv
+# Edit at https://www.gitignore.io/?templates=flask,python,virtualenv
 
 ### Flask ###
 instance/*
@@ -114,10 +114,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# virtualenv
-venv
-env
-
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -165,17 +161,9 @@ env
 
 # Pyre type checker
 
-# End of https://www.gitignore.io/api/flask,python
-
-
-
-# Created by https://www.gitignore.io/api/virtualenv
-# Edit at https://www.gitignore.io/?templates=virtualenv
-
 ### VirtualEnv ###
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-.Python
 [Bb]in
 [Ii]nclude
 [Ll]ib
@@ -192,4 +180,4 @@ env.bak/
 venv.bak/
 pip-selfcheck.json
 
-# End of https://www.gitignore.io/api/virtualenv
+# End of https://www.gitignore.io/api/flask,python,virtualenv
