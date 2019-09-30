@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint,json,request
 
 router = Blueprint("router", __name__)
 
@@ -8,5 +8,5 @@ def check():
 
 @router.route("/add", methods=["POST"])
 def add():
-    # Add logic here
-    return
+    args = json.loads(request.get_json)      # Loading the array from request
+    return sum(args)   
