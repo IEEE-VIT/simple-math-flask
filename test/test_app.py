@@ -2,7 +2,6 @@ import sys,os,random,json
 sys.path.append(os.getcwd())
 
 from app import app
-import os 
 import unittest
 
 class AppTests(unittest.TestCase):
