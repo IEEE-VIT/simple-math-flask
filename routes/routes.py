@@ -6,7 +6,14 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
-@router.route("/add", methods=["POST","GET"])
+@router.route("/add", methods=["POST"])
 def add():
-    args = json.loads(request.get_json())      # Loading the array from request
-    return str(sum(args))
+
+    if request.get_json():
+        args = json.loads(request.get_json())      # Loading the array from request
+        if isinstance(args,list) or isinstance(args,int):
+            return str(sum(args))
+        else:
+            return str(args) + ' is not a valid input'
+    else:
+        return 'No input was given'
