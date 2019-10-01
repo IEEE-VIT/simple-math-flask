@@ -9,13 +9,16 @@ def check():
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
+    x = request.form.data.param1
+    y = request.form.data.param2
+
+    summation = (x+x)**y
+
+    res = {
+        result: summation,
+        meta: {
+            message: "sending twice of first number and then its power second number"
+        }
+    }
     return
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    form = investment()
 
-    if request.method == 'POST': 
-        return A + B
-
-    elif request.method == 'GET':
-        return render_template('home.html', form=form)
