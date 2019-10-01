@@ -7,6 +7,8 @@ def check():
     return "Congratulations! Your app works. :)"
 
 @router.route("/add", methods=["POST"])
-def add():
-    # Add logic here
-    return
+def exp():
+    for i in range(b):
+    a=a*a
+    i=i+1
+return a
