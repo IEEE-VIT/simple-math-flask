@@ -2,7 +2,7 @@
 
 This project is open to anyone in the community. Developers can contribute by adding code, and non-developers can contribute by improving docs. The main goal of this repository is to support open source with [hacktoberfest](http://hacktoberfest.digitalocean.com).
 
-Follow the steps below to start contributing:
+**Follow the steps below to start contributing:**
 
 1. Fork this repository and clone your fork.
 
