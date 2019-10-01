@@ -32,6 +32,8 @@ class AppTests(unittest.TestCase):
         self.assertEqual(sum(ints), int(add_test_1.data)) # Response data is a string, so converted it to int
         add_test_2 = self.app.post('/math/add') 
         self.assertEqual(b'No input was given',add_test_2.data)
+        add_test_3 = self.app.post('/math/add', json = json.dumps('random string') , headers = {'Content-Type': 'application/json'})
+        self.assertEqual(b'random string is not a valid input',add_test_3.data)
         
 if __name__ == '__main__':
     unittest.main()
