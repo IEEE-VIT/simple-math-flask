@@ -10,3 +10,12 @@ def check():
 def add():
     # Add logic here
     return
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    form = investment()
+
+    if request.method == 'POST': 
+        return A + B
+
+    elif request.method == 'GET':
+        return render_template('home.html', form=form)
