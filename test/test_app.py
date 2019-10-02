@@ -32,12 +32,18 @@ class AppTests(unittest.TestCase):
 
         # Division test
         test_data['data'] = {
-            'param1': random.randint(0,50),
-            'param2': random.randint(0,50)
+            'param1': random.randint(1,50),
+            'param2': random.randint(1,50)
         }
         div_test = json.loads(self.app.post('/math/division',json = json.dumps(test_data)).data)
         self.assertEqual(div_test['result'], test_data['data']['param1']/test_data['data']['param2'])
 
+        # Addition test
+        test_data['data'] = {}
+        for i in range(len(ints)):
+            test_data['data']['param'+str(i)] = ints[i]
+        add_test = json.loads(self.app.post('/math/add',json = json.dumps(test_data)).data)
+        self.assertEqual(add_test['result'], sum(ints))
 
 if __name__ == '__main__':
     unittest.main()

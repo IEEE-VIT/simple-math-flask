@@ -7,11 +7,6 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
-@router.route("/add", methods=["POST"])
-def add():
-    # Add logic here
-    return
-
 @router.route("/product", methods=["POST"])
 def product():
     result = {
@@ -30,6 +25,25 @@ def product():
     else:
         result['meta'] = 'No JSON provided'
         return json.dumps(result)
+
+@router.route("/add", methods=["POST"])
+def add():
+    result = {
+        'result': None,
+        'meta': None
+    }
+
+    # Works with multiple parameters
+    if request.get_json():
+        args = json.loads(request.get_json())
+        args = [args['data'][i] for i in args['data']]
+        result['result'] = sum(args)
+        return json.dumps(result)
+
+    else:
+        result['meta'] = 'No JSON provided'
+        return json.dumps(result)
+
 
 @router.route("/division", methods=["POST"])
 def division():
