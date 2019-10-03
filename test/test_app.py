@@ -25,7 +25,7 @@ class AppTests(unittest.TestCase):
         
         ints = [random.randint(0,50) for i in range(15)]
         for i in range(len(ints)):
-            test_data['data']['param'+str(i)] = ints[i]
+            test_data['data']['param'+str(i+1)] = ints[i]
         
         mul_test = json.loads(self.app.post('/math/product',json = json.dumps(test_data)).data)
         self.assertEqual(mul_test['result'],functools.reduce(lambda x,y: x*y,ints))
@@ -41,7 +41,7 @@ class AppTests(unittest.TestCase):
         # Addition test
         test_data['data'] = {}
         for i in range(len(ints)):
-            test_data['data']['param'+str(i)] = ints[i]
+            test_data['data']['param'+str(i+1)] = ints[i]
         add_test = json.loads(self.app.post('/math/add',json = json.dumps(test_data)).data)
         self.assertEqual(add_test['result'], sum(ints))
 
