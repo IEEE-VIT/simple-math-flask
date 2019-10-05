@@ -62,3 +62,21 @@ def division():
     else:
         result['meta'] = 'No JSON provided'
         return json.dumps(result)
+
+@router.route("/subtract", methods=["POST"])
+def subtract():
+    result = {
+        'result': None,
+        'meta': None
+    }
+
+    # Works with 2 parameters
+
+    if request.get_json():
+        args = json.loads(request.get_json())['data']
+        result['result'] = args['param1']-args['param2']
+        return json.dumps(result)
+
+    else:
+        result['meta'] = 'No JSON provided'
+        return json.dumps(result)
