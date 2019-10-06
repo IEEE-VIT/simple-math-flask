@@ -18,5 +18,41 @@ class AppTests(unittest.TestCase):
         response = self.app.get('/math/check')
         self.assertEqual(response.data, b'Congratulations! Your app works. :)')
 
+    def test_power_without_data(self):
+        response = self.app.post('/math/power')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "Input expected!")
+    
+    def test_power_without_base_value(self):
+        response = self.app.post('/math/power', json={"exponent": 1})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "Base value expected!")
+    
+    def test_power_without_exponent_value(self):
+        response = self.app.post('/math/power', json={"base": 2})
+        self.assertEqual(response.json["result"], 1)
+
+    def test_power_success(self):
+        response  = self.app.post('/math/power', json={"base": 2, "exponent": 3})
+        self.assertEqual(response.json["result"], 8)
+
+    def test_root_without_data(self):
+        response = self.app.post('/math/root')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "Input expected!")
+    
+    def test_root_without_base_value(self):
+        response = self.app.post('/math/root', json={"root": 1})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json["error"], "Base value expected!")
+    
+    def test_root_without_root_value(self):
+        response = self.app.post('/math/root', json={"base": 4})
+        self.assertEqual(response.json["result"], 2)
+    
+    def test_root_success(self):
+        response  = self.app.post('/math/root', json={"base": 16, "root": 4})
+        self.assertEqual(response.json["result"], 2.0)
+
 if __name__ == '__main__':
     unittest.main()
