@@ -10,4 +10,4 @@ CORS(app)
 app.register_blueprint(router, url_prefix="/math")
 
 if __name__ == '__main__':
-    app.run(port=PORT)
+    app.run(debug = True, port=PORT)
