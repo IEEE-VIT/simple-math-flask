@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Math!</title>
+</head>
+<body>
+    <div class="container">
+		<br>
+		<h2>Let's {{ op }} !</h2>
+		<br>
+		<form action="" class="form-inline" method="post">
+			<input type="number" class="form-control" placeholder = "Number 1" name="no1" value="{{request.form.no1}}"><br>
+			<input type="number" class="form-control" placeholder = "Number 2" name="no2" value="{{request.form.no2}}"><br>
+			<input class="btn btn-default" type="submit" value={{ op }}>
+		</form>
+
+        <h3>Result: {{ res }}</h3>
+	</div>
+</body>
+</html>
