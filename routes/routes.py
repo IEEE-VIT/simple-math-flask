@@ -10,3 +10,15 @@ def check():
 def add():
     # Add logic here
     return
+
+@route.route("/solve", methods=["POST"])
+ def solve(coeffList):
+        """
+        Pass a list of coeff (a,b,c) , returns 2 roots
+        """
+        import cmath
+        d = (coeffList[1]**2) - (4*coeffList[0]*coeffList[2])
+        
+        sol1 = (-coeffList[1]-cmath.sqrt(d))/(2*a)
+        sol2 = (-coeffList[1]+cmath.sqrt(d))/(2*a)
+        return sol1,sol2
