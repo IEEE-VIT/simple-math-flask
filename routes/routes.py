@@ -4,6 +4,7 @@ import numpy as np
 
 router = Blueprint("router", __name__)
 
+
 @router.route("/check")
 def check():
     return "Congratulations! Your app works. :)"
@@ -165,6 +166,41 @@ def mat_mul():
     result['result'] = result_t
     print(str(result))
     return jsonify(str(result))
+
+
+@router.route('/matrix_transpose', methods = ['POST'])
+def matrix_transpose():
+    result = {
+        'result' : None,
+        'meta' : None
+    }
+    if not request.json:
+        result['meta'] = "please post some values"
+        return jsonify(result)
+    else:
+        data_in = request.json['data']
+
+    if not data_in:
+        result['meta'] = "no json data was provided.."
+        return jsonify(result)
+    else:
+        values = None
+        for i in data_in:
+            values = data_in[i]
+    values = values[0]
+    output = values[:][:]
+    row, column = np.shape(values)
+    for i in range(row): 
+        for j in range(column): 
+            output[i][j] = values[j][i]
+    
+    result['result'] = output
+    
+    return jsonify(str(result))
+
+
+
+
 
 
             
