@@ -198,6 +198,35 @@ def matrix_transpose():
     
     return jsonify(str(result))
 
+@router.route('/matrix_inverse', methods = ['POST'])
+def matrix_inverse():
+    result = {
+        'result' : None,
+        'meta' : None
+    }
+    if not request.json:
+        result['meta'] = "please post some values"
+        return jsonify(result)
+    else:
+        data_in = request.json['data']
+
+    if not data_in:
+        result['meta'] = "no json data was provided.."
+        return jsonify(result)
+    else:
+        values = None
+        for i in data_in:
+            values = data_in[i]
+    values = values[0]
+    values = np.array(values)
+    det = np.linalg.det(values)
+    if det == 0:
+        result['meta'] = "Input matrix is a singular matrix"
+    else:
+        result['result'] = np.linalg.inv(values)
+    
+    return jsonify(str(result))
+
 
 
 
