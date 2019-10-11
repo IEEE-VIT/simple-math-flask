@@ -252,5 +252,28 @@ def am():
 
     return jsonify(result) 
     
+@router.route('/gm', methods = ['POST'])
+def gm():
+    result = {
+        'result' : None,
+        'meta' : None
+    }
+    if not request.json:
+        result['meta'] = "please post some values"
+        return jsonify(result)
+    else:
+        data_in = request.json['data']
+
+    if not data_in:
+        result['meta'] = "no json data was provided.."
+        return jsonify(result)
+    else:
+        values = None
+        for i in data_in:
+            values = data_in[i]
+    values = np.array(values)
+    result['result'] = values.prod()**(1.0/len(values))
+    
+    return jsonify(result)
 
             
