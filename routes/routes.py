@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import jsonify, request, Response
 import numpy as np
+import statistics
 
 router = Blueprint("router", __name__)
 
@@ -227,9 +228,29 @@ def matrix_inverse():
     
     return jsonify(str(result))
 
+@router.route('/am', methods = ['POST'])
+def am():
+    result = {
+        'result' : None,
+        'meta' : None
+    }
+    if not request.json:
+        result['meta'] = "please post some values"
+        return jsonify(result)
+    else:
+        data_in = request.json['data']
 
+    if not data_in:
+        result['meta'] = "no json data was provided.."
+        return jsonify(result)
+    else:
+        values = None
+        for i in data_in:
+            values = data_in[i]
+    print(values)
+    result['result'] = statistics.mean(values)
 
-
-
+    return jsonify(result) 
+    
 
             
