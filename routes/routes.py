@@ -6,7 +6,9 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
-@router.route("/add", methods=["POST"])
-def add():
-    # Add logic here
-    return
+@router.route("/exponent", methods=["POST"])
+def exponent():
+    e=2.71828
+    y=int(input("enter the value of the power"))
+    t=e**y
+    return(t)
