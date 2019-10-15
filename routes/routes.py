@@ -6,7 +6,18 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
-@router.route("/add", methods=["POST"])
-def add():
-    # Add logic here
-    return
+@router.route("/factorial", methods=["POST"])
+def factorial():
+    fact=1
+    
+    if a<0:
+        print("Invalid Input!")
+        
+    elif type(a)==float:
+        print("Invalid Input")
+        
+    else:
+        for i in range (1,a+1,1):
+            fact=fact*i
+            
+    return fact
