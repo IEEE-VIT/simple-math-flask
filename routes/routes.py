@@ -8,6 +8,7 @@ def check():
 
 @router.route("/factorial", methods=["POST"])
 def factorial():
+    a=int(input("Enter a number whose factorial you want to find:\n"))
     fact=1
     
     if a<0:
