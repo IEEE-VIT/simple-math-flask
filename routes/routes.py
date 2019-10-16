@@ -9,4 +9,4 @@ def check():
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
-    return
+    return "Booyah!! I want free shirts and stickers XD "
