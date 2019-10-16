@@ -1,5 +1,5 @@
-from flask import Blueprint
-
+from flask import Blueprint,request,jsonify
+inport json
 router = Blueprint("router", __name__)
 
 @router.route("/check")
@@ -10,3 +10,7 @@ def check():
 def add():
     # Add logic here
     return
+#changed 
+@router.route("/hello")
+def hello():
+    return "hactober is cool. :)"
