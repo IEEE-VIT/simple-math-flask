@@ -8,5 +8,6 @@ def check():
 
 @router.route("/add", methods=["POST"])
 def add():
-    # Add logic here
-    return
+    var=7
+    var2=8
+    return var +var2

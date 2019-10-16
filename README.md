@@ -32,6 +32,10 @@ $ python3 app.py
 $ python3 tests/test_app.py
 ```
 
+## Dependencies
+Flask>=1.0.2
+Flask-Cors>=3.0.8
+
 ## Contributing
 To start contributing, check out [CONTRIBUTING.md](https://github.com/mayankshah1607/SimpleMath-NodeJS/blob/master/CONTRIBUTING.md). New contributors are always welcome to support this project. Check out issues labelled as `Hacktoberfest` if you are up for some grabs! :)
 
