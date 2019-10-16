@@ -10,3 +10,5 @@ def check():
 def add():
     # Add logic here
     return
+def add():
+    return(3+5)    
