@@ -7,6 +7,11 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
+# Mayank made this
+@router.route("/hello")
+def hello():
+    return "Hacktoberfest is cool!"
+
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
