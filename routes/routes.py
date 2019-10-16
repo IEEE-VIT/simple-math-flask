@@ -8,7 +8,7 @@ def check():
 @router.route("/hello")
 def hello():
     return "Hacktoberfest is cool!"
-#hello this is shivangi
+#hello this is shivangi.
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
