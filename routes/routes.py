@@ -6,6 +6,10 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
+@router.route("/works")
+def check():
+    return "Checking eligibilty of PRs post challenge completion"
+
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
