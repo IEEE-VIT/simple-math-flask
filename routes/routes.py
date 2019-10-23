@@ -10,5 +10,7 @@ def check():
 def add():
     # Add logic here
     return "Booyah!! I want free shirts and stickers XD "
+
+@router.route("/tshirt")
 def tshirt():
     return "another change made"
