@@ -19,7 +19,7 @@ def add():
     res = {
         result: summation,
         meta: {
-            message: "sending addition of two numbers"
+            message: "sum of 2 nos is "
         }
     }
     return res
