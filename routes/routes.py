@@ -8,8 +8,8 @@ def check():
 
 
 @router.route("/add", methods=["POST"])
-def add():
-    # Add logic here
+def add(x, y):
+    x + y
     return
     x = request.form.data.param1
     y = request.form.data.param2
