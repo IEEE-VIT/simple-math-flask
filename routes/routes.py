@@ -4,8 +4,10 @@ router = Blueprint("router", __name__)
 
 @router.route("/check")
 def check():
-    return "Congratulations! Your app works. :)"
-
+    return " Yaaahooooo !!! :)"
+"""
+    comment added
+"""
 
 @router.route("/add", methods=["POST"])
 def add():
@@ -19,7 +21,7 @@ def add():
     res = {
         result: summation,
         meta: {
-            message: "sending addition of two numbers"
+            message: "enter 2 nos : "
         }
     }
     return res
