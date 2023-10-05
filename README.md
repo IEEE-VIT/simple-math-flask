@@ -1,33 +1,43 @@
-<p align="center"><img width="40%" src="https://hacktoberfest.digitalocean.com/assets/logo-hf19-full-10f3c000cea930c76acc1dedc516ea7118b95353220869a3051848e45ff1d656.svg"/></p>
+<p align="center"><img width="40%" src="https://hacktoberfest.com/_next/static/media/logo-hacktoberfest--horizontal.ebc5fdc8.svg"></p>
 
 # Hacktoberfest, 2019 with IEEE-VIT Student Branch
 
 SimpleMath-Flask is a Flask app that does math for you. This repository was created to help developers get started with Open Source during [Hacktoberfest](https://hacktoberfest.digitalocean.com/)
 > NOTE: Check out `issues` labelled as `Hacktoberfest` and start contributing!
 
-Made with :heart: by [IEEE-VIT](https://ieeevit.com)
+Made with :heart: by [IEEE-VIT](https://ieeevit.org/)
 
 Support Open Source by participating in [Hacktoberfest](https://hacktoberfest.digitalocean.com/) :yellow_heart:
 
 ## Getting started
 
-1. To setup this project, simply run the following command:
+1.Before setting up the project,Create A virtual environment in the project directory using the following command:
+```bash
+$ python3 -m venv .venv
+```
+2.The environment has been created just needs to be activated:
+```bash
+$ source .venv/bin/activate  ( for mac/linux users )  
+$ source .venv/Scripts/activate ( for windows users)
+```
+
+3. To setup this project, simply run the following command:
 ```bash
 $ pip3 install -r requirements.txt
 ```
 
 It should download and setup the dependencies and you're good to go! :)
 
-2. All the routes are setup inside `routes/routes.py`. Most of your code should go there.
+4. All the routes are setup inside `routes/routes.py`. Most of your code should go there.
 
-3. To start the project, simply run the following command:
+5. To start the project, simply run the following command:
 ```bash
 $ python3 app.py
 ```
 
-4. All the unit tests are located inside `tests/test_app.py`. All the tests should go there.
+6. All the unit tests are located inside `tests/test_app.py`. All the tests should go there.
 
-5. To run the test suite, execute the following command:
+7. To run the test suite, execute the following command:
 ```bash
 $ python3 tests/test_app.py
 ```

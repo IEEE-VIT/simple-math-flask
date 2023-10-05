@@ -18,5 +18,7 @@ class AppTests(unittest.TestCase):
         response = self.app.get('/math/check')
         self.assertEqual(response.data, b'Congratulations! Your app works. :)')
 
+    #Add the test_cases for various functionality here
+
 if __name__ == '__main__':
     unittest.main()
