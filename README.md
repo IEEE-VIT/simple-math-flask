@@ -1,11 +1,13 @@
-<p align="center"><img width="40%" src="https://hacktoberfest.com/_next/static/media/logo-hacktoberfest--horizontal.ebc5fdc8.svg"></p>
+# SimpleMath-Flask
+
+<img src="https://files.ieeevit.org/Hacktoberfest-23/Simple%20Math.png" alt="README Banner"/>
 
 # Hacktoberfest, 2023 with IEEE-VIT Student Branch
 
 SimpleMath-Flask is a Flask app that does math for you. This repository was created to help developers get started with Open Source during [Hacktoberfest](https://hacktoberfest.com/)
 > NOTE: Check out `issues` labelled as `Hacktoberfest` and start contributing!
 
-Made with :heart: by [IEEE-VIT](https://ieeevit.org/)
+Made with :heart: by [IEEE-VIT](https://ieeevit.org/) 
 
 Support Open Source by participating in [Hacktoberfest](https://hacktoberfest.com/) :yellow_heart:
 
@@ -16,10 +18,10 @@ Support Open Source by participating in [Hacktoberfest](https://hacktoberfest.co
  python3 -m venv .venv
 ```
 2.The environment has been created just needs to be activated:
-```bash
+`bash`
 For mac/linux users: `source .venv/bin/activate`
 For windows users: `source .venv/Scripts/activate`
-```
+
 
 3. To setup this project, simply run the following command:
 ```bash
