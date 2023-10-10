@@ -25,7 +25,7 @@ For windows users: `source .venv/Scripts/activate`
 
 3. To setup this project, simply run the following command:
 ```bash
- pip3 install -r requirements.txt
+ pip install -r requirements.txt
 ```
 
 It should download and setup the dependencies and you're good to go! :)
