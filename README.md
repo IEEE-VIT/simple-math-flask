@@ -15,7 +15,7 @@ Support Open Source by participating in [Hacktoberfest](https://hacktoberfest.co
 
 1.Before setting up the project,Create A virtual environment in the project directory using the following command:
 ```bash
- python3 -m venv .venv
+ python -m venv .venv
 ```
 2.The environment has been created just needs to be activated:
 `bash`
@@ -34,14 +34,14 @@ It should download and setup the dependencies and you're good to go! :)
 
 5. To start the project, simply run the following command:
 ```bash
- python3 app.py
+ python app.py
 ```
 
 6. All the unit tests are located inside `test/test_app.py`. All the tests should go there.
 
 7. To run the test suite, execute the following command:
 ```bash
- python3 tests/test_app.py
+ python tests/test_app.py
 ```
 
 ## Contributing
