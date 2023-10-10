@@ -17,8 +17,8 @@ Support Open Source by participating in [Hacktoberfest](https://hacktoberfest.co
 ```
 2.The environment has been created just needs to be activated:
 ```bash
- source .venv/bin/activate  ( for mac/linux users )  
- source .venv/Scripts/activate ( for windows users)
+For mac/linux users: `source .venv/bin/activate`
+For windows users: `source .venv/Scripts/activate`
 ```
 
 3. To setup this project, simply run the following command:
