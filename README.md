@@ -37,7 +37,7 @@ It should download and setup the dependencies and you're good to go! :)
  python3 app.py
 ```
 
-6. All the unit tests are located inside `tests/test_app.py`. All the tests should go there.
+6. All the unit tests are located inside `test/test_app.py`. All the tests should go there.
 
 7. To run the test suite, execute the following command:
 ```bash
