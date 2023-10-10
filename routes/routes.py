@@ -6,20 +6,17 @@ router = Blueprint("router", __name__)
 def check():
     return "Congratulations! Your app works. :)"
 
-
 @router.route("/add", methods=["POST"])
 def add():
     # Add logic here
+    return 
+
+@router.route("multiply",methods=["POST"])
+def multiply():
+    #Add logic here
     return
-    x = request.form.data.param1
-    y = request.form.data.param2
 
-    summation = x+y
-
-    res = {
-        result: summation,
-        meta: {
-            message: "sending addition of two numbers"
-        }
-    }
-    return res
+@router.route("/division",methods=['POST'])
+def division():
+    #Add logic here
+    return
