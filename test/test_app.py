@@ -20,5 +20,9 @@ class AppTests(unittest.TestCase):
 
     #Add the test_cases for various functionality here
 
+    def test_matrix_addition_request_format1(self):
+        response = self.app.post('/math/matrixaddition')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+
 if __name__ == '__main__':
     unittest.main()
