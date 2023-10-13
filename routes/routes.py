@@ -35,6 +35,14 @@ def matrix_addition():
             "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
         }), HTTPStatus.BAD_REQUEST
     
+    # Checking if operand keys in data dictionary is named properly
+    for i in range(1, len(data.keys())+1):
+        if f"param{i}" not in data:
+            return jsonify({
+                "result": None,
+                "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
+            }), HTTPStatus.BAD_REQUEST
+    
     # Checking if there are atleast 2 operands
     if len(data.keys()) < 2:
         return jsonify({
