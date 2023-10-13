@@ -73,9 +73,9 @@ def matrix_addition():
                     }), HTTPStatus.BAD_REQUEST
     
     # Checking if all operands are of the same dimensions
-    n = data['param1']
-    m = data['param1'][0]
-    for i in range(2, len(data.keys())+1):
+    n = len(data['param1'])
+    m = len(data['param1'][0])
+    for i in range(1, len(data.keys())+1):
         if len(data[f'param{i}']) != n:
             return jsonify({
                 "result": None,
@@ -83,10 +83,20 @@ def matrix_addition():
             }), HTTPStatus.BAD_REQUEST
 
         for row in data[f'param{i}']:
-            if len(row) == m:
+            if len(row) != m:
                 return jsonify({
                     "result": None,
                     "meta": { "error": "Operands of matrix addition should be of same dimensions nxm" }
                 }), HTTPStatus.BAD_REQUEST
     
-    return "Matrix Addition Route"
+    # Calculating result of matrix addition
+    result_mat = [[0 for j in range(m)] for i in range(n)]
+    for k in range(1, len(data.keys())+1):
+        for i in range(n):
+            for j in range(m):
+                result_mat[i][j] += data[f'param{k}'][i][j]
+    
+    return jsonify({
+        "result": result_mat,
+        "meta": {}
+    }), HTTPStatus.OK
