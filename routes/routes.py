@@ -50,4 +50,43 @@ def matrix_addition():
             "meta": { "error": "Matrix Addition requires atleast 2 operands" }
         }), HTTPStatus.BAD_REQUEST
 
+    # Checking if operand is of the correct format
+    for i in range(1, len(data.keys())+1):
+        if not isinstance(data[f'param{i}'], list) or len(data[f'param{i}']) == 0:
+            return jsonify({
+                "result": None,
+                "meta": { "error": "Operands should be a matrix i.e list of lists of integers/floats" }
+            }), HTTPStatus.BAD_REQUEST
+        
+        for row in data[f'param{i}']:
+            if not isinstance(row, list) or len(row) == 0:
+                return jsonify({
+                    "result": None,
+                    "meta": { "error": "Operands should be a matrix i.e list of lists of integers/floats" }
+                }), HTTPStatus.BAD_REQUEST
+            
+            for el in row:
+                if not isinstance(el, int) and not isinstance(el, float):
+                    return jsonify({
+                        "result": None,
+                        "meta": { "error": "Operands should be a matrix i.e list of lists of integers/floats" }
+                    }), HTTPStatus.BAD_REQUEST
+    
+    # Checking if all operands are of the same dimensions
+    n = data['param1']
+    m = data['param1'][0]
+    for i in range(2, len(data.keys())+1):
+        if len(data[f'param{i}']) != n:
+            return jsonify({
+                "result": None,
+                "meta": { "error": "Operands of matrix addition should be of same dimensions nxm" }
+            }), HTTPStatus.BAD_REQUEST
+
+        for row in data[f'param{i}']:
+            if len(row) == m:
+                return jsonify({
+                    "result": None,
+                    "meta": { "error": "Operands of matrix addition should be of same dimensions nxm" }
+                }), HTTPStatus.BAD_REQUEST
+    
     return "Matrix Addition Route"

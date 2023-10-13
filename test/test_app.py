@@ -32,5 +32,33 @@ class AppTests(unittest.TestCase):
         response = self.app.post('/math/matrixaddition', json={ "data": {} })
         self.assertEqual(response.json['meta']['error'], 'Matrix Addition requires atleast 2 operands')
 
+    def test_matrix_addition_operand_format1(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": "foo",
+            "param2": "bar"
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands should be a matrix i.e list of lists of integers/floats')
+    
+    def test_matrix_addition_operand_format2(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": ["foo"],
+            "param2": ["bar"]
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands should be a matrix i.e list of lists of integers/floats')
+    
+    def test_matrix_addition_operand_format3(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": [["foo"]],
+            "param2": [["bar"]]
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands should be a matrix i.e list of lists of integers/floats')
+    
+    def test_matrix_addition_operand_format4(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": [[1], [2], [3]],
+            "param2": [[1, 2, 3]]
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands of matrix addition should be of same dimensions nxm')
+
 if __name__ == '__main__':
     unittest.main()
