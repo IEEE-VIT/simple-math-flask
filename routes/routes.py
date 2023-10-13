@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 router = Blueprint("router", __name__)
 
@@ -20,3 +20,7 @@ def multiply():
 def division():
     #Add logic here
     return
+
+@router.route("/matrixaddition", methods=['POST'])
+def matrix_addition():
+    return "Matrix Addition Route"
