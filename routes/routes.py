@@ -28,10 +28,18 @@ def matrix_addition():
     try:
         body = request.json
         data = body['data']
+        assert isinstance(data, dict)
     except Exception:
         return jsonify({
             "result": None,
             "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
         }), HTTPStatus.BAD_REQUEST
     
+    # Checking if there are atleast 2 operands
+    if len(data.keys()) < 2:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "Matrix Addition requires atleast 2 operands" }
+        }), HTTPStatus.BAD_REQUEST
+
     return "Matrix Addition Route"

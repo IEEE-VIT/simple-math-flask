@@ -23,6 +23,10 @@ class AppTests(unittest.TestCase):
     def test_matrix_addition_request_format1(self):
         response = self.app.post('/math/matrixaddition')
         self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+    
+    def test_matrix_addition_request_format2(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {} })
+        self.assertEqual(response.json['meta']['error'], 'Matrix Addition requires atleast 2 operands')
 
 if __name__ == '__main__':
     unittest.main()
