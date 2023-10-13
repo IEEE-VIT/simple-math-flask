@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+from http import HTTPStatus
+from flask import Blueprint, request, jsonify
 
 router = Blueprint("router", __name__)
 
@@ -23,4 +24,14 @@ def division():
 
 @router.route("/matrixaddition", methods=['POST'])
 def matrix_addition():
+    # Checking if request body is of correct format
+    try:
+        body = request.json
+        data = body['data']
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
+        }), HTTPStatus.BAD_REQUEST
+    
     return "Matrix Addition Route"
