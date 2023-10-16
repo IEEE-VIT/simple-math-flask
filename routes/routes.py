@@ -18,7 +18,7 @@ def multiply():
     return
 
 @router.route("/division",methods=['POST'])
-def divide():
+def division():
     # Checking if request body is of correct format
     try:
         body = request.json
