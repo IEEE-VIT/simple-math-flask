@@ -50,8 +50,8 @@ class AppTests(unittest.TestCase):
         } })
         self.assertEqual(response.json['meta']['error'], 'Division by zero is not allowed')
     
-    def test_matrix_addition_correctness(self):
-        response = self.app.post('/math/matrixaddition', json={ "data": {
+    def test_division_correctness(self):
+        response = self.app.post('/math/division', json={ "data": {
             "param1": 3,
             "param2": 2,
         } })
