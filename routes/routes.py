@@ -60,7 +60,7 @@ def division():
             "meta": { "error": "Division by zero is not allowed" }
         }), HTTPStatus.BAD_REQUEST
     
-    div_res = data["param2"] / data["param2"]
+    div_res = data["param1"] / data["param2"]
 
     return jsonify({
         "result": div_res,
