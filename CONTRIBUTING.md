@@ -26,22 +26,34 @@ On the GitHub page of the project you're interested in, click the "Fork" button 
 
 2] Clone the Repository:
 Clone the forked repository to your local machine using Git. Open your terminal and use the following command:
+```
 git clone <repository_url>
+
+```
 
 3] Create a New Branch:
 Create a new branch to work on your contribution. Use a descriptive name for the branch related to the changes you'll be making.
+```
 git checkout -b <branch_name>
+```
 
 4] Make Changes:
 Make the necessary changes to the codebase locally on your machine using a code editor.
 
 5] Commit Changes:
 Commit your changes to the local repository. Use meaningful commit messages to describe the changes you've made.
+
+```
 git add .
 git commit -m "Your descriptive commit message"
+```
+
 6] Push Changes:
 Push your changes to your forked repository on GitHub.
+```
 git push origin <branch_name>
+```
+
 7] Create a Pull Request:
 Go to your forked repository on GitHub and click the "New Pull Request" button. Select the branch you want to merge into the original repository's branch. Provide a clear and detailed description of your changes in the pull request.
 
