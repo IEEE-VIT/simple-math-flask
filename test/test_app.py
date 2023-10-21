@@ -19,6 +19,32 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.data, b'Congratulations! Your app works. :)')
 
     #Add the test_cases for various functionality here
+    
+    def test_multiplication_request_format1(self):
+        response = self.app.post('/math/multiply')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
+    
+    def test_multiplication_request_format2(self):
+        response = self.app.post('/math/multiply', json={ "data": { "foo": "bar" } })
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
+
+    def test_multiplication_request_format3(self):
+        response = self.app.post('/math/multiply', json={ "data": {} })
+        self.assertEqual(response.json['meta']['error'], 'The request must contain exactly two operands.')
+
+    def test_multiplication_operand_format(self):
+        response = self.app.post('/math/multiply', json={ "data": {
+            "param1": "foo",
+            "param2": "bar"
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands must be integers/floats.')
+
+    def test_multiplication_correctness(self):
+        response = self.app.post('/math/multiply', json={ "data": {
+            "param1": 4,
+            "param2": 5
+        } })
+        self.assertEqual(response.json['result'], 20)
 
     def test_division_request_format1(self):
         response = self.app.post('/math/division')
