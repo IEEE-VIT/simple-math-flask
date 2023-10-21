@@ -57,12 +57,37 @@ class AppTests(unittest.TestCase):
         } })
         self.assertEqual(response.json['result'], 1.5)
 
+    def test_exponentiation_request_format1(self):
+        response = self.app.post('/math/exponentiation')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
+    
+    def test_exponentiation_request_format2(self):
+        response = self.app.post('/math/exponentiation', json={ "data": { "foo": "bar" } })
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
 
+    def test_exponentiation_request_format3(self):
+        response = self.app.post('/math/exponentiation', json={ "data": {} })
+        self.assertEqual(response.json['meta']['error'], 'The request must contain exactly two operands.')
+
+    def test_exponentiation_operand_format(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": "foo",
+            "param2": "bar"
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands must be integers/floats.')
+
+    def test_exponentiation_correctness(self):
+        response = self.app.post('/math/matrixaddition', json={ "data": {
+            "param1": 5,
+            "param2": 3
+        } })
+        self.assertEqual(response.json['result'], 125)
+    
     def test_matrix_addition_request_format1(self):
         response = self.app.post('/math/matrixaddition')
         self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
-    
-    def test_matrix_addition_request_format1(self):
+
+    def test_matrix_addition_request_format2(self):
         response = self.app.post('/math/matrixaddition', json={ "data": { "foo": "bar" } })
         self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
 
