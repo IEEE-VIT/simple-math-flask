@@ -2,9 +2,9 @@ import os
 import sys
 import unittest
 
-from app import app
-
 sys.path.append(os.getcwd())
+
+from app import app
 
 
 class AppTests(unittest.TestCase):
@@ -151,7 +151,7 @@ class AppTests(unittest.TestCase):
         response = self.app.post('/math/quadraticequation')
 
         # assert statements
-        self.assertEqual(response.status, 400)
+        self.assertEqual(response.status, '400 BAD REQUEST')
         self.assertEqual(response.json['meta']['error'],
                          'The request must be a JSON of the following format: { data: { a: <value>, b: <value>, '
                          'c: <value>} }')
@@ -163,7 +163,7 @@ class AppTests(unittest.TestCase):
         response = self.app.post('/math/quadraticequation', json={"data": {"foo": "bar"}})
 
         # assert statements
-        self.assertEqual(response.status, 400)
+        self.assertEqual(response.status, '400 BAD REQUEST')
         self.assertEqual(response.json['meta']['error'],
                          'The request must be a JSON of the following format: { data: { a: <value>, b: <value>, '
                          'c: <value>} }')
@@ -179,7 +179,7 @@ class AppTests(unittest.TestCase):
         }})
 
         # assert statements
-        self.assertEqual(response.status, 400)
+        self.assertEqual(response.status, '400 BAD REQUEST')
         self.assertEqual(response.json['meta']['error'],
                          'Operands (a, b, c) should be either an int or a float')
 
@@ -194,7 +194,7 @@ class AppTests(unittest.TestCase):
         }})
 
         # assert statements
-        self.assertEqual(response.status, 200)
+        self.assertEqual(response.status, '200 OK')
         self.assertEqual(response.json['result'], {'x1': 2.0, 'x2': 1.0})
         self.assertEqual(response.json['meta']['detail'], 'Two real and distinct solutions as (b^2 - 4ac) > 0')
 

@@ -206,7 +206,7 @@ def solve_quadratic_equation():
             "result": None,
             "meta": {
                 "error": "The request must be a JSON of the following format: { data: { a: <value>, b: <value>,"
-                         "  c: <value>} }"}
+                         " c: <value>} }"}
         }), HTTPStatus.BAD_REQUEST
 
     # Checking if operand is of the correct format
