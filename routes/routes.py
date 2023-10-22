@@ -222,14 +222,14 @@ def matrix_multiplication():
             if not isinstance(row, list) or len(row) == 0:
                 return jsonify({
                     "result": None,
-                    "meta": {"error": "A matrix should be a list of lists of integers/floats"}
+                    "meta": {"error": "A matrix row can't be Empty or A matrix row should be a list"}
                 }), HTTPStatus.BAD_REQUEST
 
             for el in row:
                 if not isinstance(el, int) and not isinstance(el, float):
                     return jsonify({
                         "result": None,
-                        "meta": {"error": "A matrix should be a list of lists of integers/floats"}
+                        "meta": {"error": "A matrix row should contain either an int or float"}
                     }), HTTPStatus.BAD_REQUEST
 
     matrix_a = matrices[0]
