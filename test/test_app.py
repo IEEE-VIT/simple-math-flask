@@ -145,6 +145,9 @@ class AppTests(unittest.TestCase):
 
     # ------------------------------- SOLVE QUADRATIC EQUATION ----------------------------------------
     def test_quadratic_request_format1(self):
+        """
+        Test if '/math/quadraticequation' request contains data in json format
+        """
         response = self.app.post('/math/quadraticequation')
 
         # assert statements
@@ -154,6 +157,9 @@ class AppTests(unittest.TestCase):
                          'c: <value>} }')
 
     def test_quadratic_request_format2(self):
+        """
+        Test if '/math/quadraticequation' request contains the correct keys in data
+        """
         response = self.app.post('/math/quadraticequation', json={"data": {"foo": "bar"}})
 
         # assert statements
