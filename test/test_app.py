@@ -169,6 +169,9 @@ class AppTests(unittest.TestCase):
                          'c: <value>} }')
 
     def test_quadratic_operand_format(self):
+        """
+        Test if '/math/quadraticequation' request data keys are of correct format
+        """
         response = self.app.post('/math/quadraticequation', json={"data": {
             "a": "2",
             "b": "1",
