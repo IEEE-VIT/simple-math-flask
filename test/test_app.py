@@ -143,6 +143,25 @@ class AppTests(unittest.TestCase):
             [6, 6]
         ])
 
+    # ------------------------------- SOLVE QUADRATIC EQUATION ----------------------------------------
+    def test_quadratic_request_format1(self):
+        response = self.app.post('/math/quadraticequation')
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { a: <value>, b: <value>, '
+                         'c: <value>} }')
+
+    def test_quadratic_request_format2(self):
+        response = self.app.post('/math/quadraticequation', json={"data": {"foo": "bar"}})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { a: <value>, b: <value>, '
+                         'c: <value>} }')
+
 
 if __name__ == '__main__':
     unittest.main()
