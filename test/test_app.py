@@ -183,6 +183,21 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.json['meta']['error'],
                          'Operands (a, b, c) should be either an int or a float')
 
+    def test_quadratic_correctness(self):
+        """
+        Test if '/math/quadraticequation' request for correct output
+        """
+        response = self.app.post('/math/quadraticequation', json={"data": {
+            "a": 1,
+            "b": -3,
+            "c": 2
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, 200)
+        self.assertEqual(response.json['result'], {'x1': 2.0, 'x2': 1.0})
+        self.assertEqual(response.json['meta']['detail'], 'Two real and distinct solutions as (b^2 - 4ac) > 0')
+
 
 if __name__ == '__main__':
     unittest.main()
