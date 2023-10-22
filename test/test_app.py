@@ -140,6 +140,7 @@ class AppTests(unittest.TestCase):
         response = self.app.post('/math/matrixmultiplication')
 
         # assert statements
+        self.assertEqual(response.status, 400)
         self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
                                                          'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
                                                          ', matrix_2, ..., matrix_n must be list of lists')
@@ -149,9 +150,22 @@ class AppTests(unittest.TestCase):
         Test if '/math/matrixmultiplication' request contains the correct format for key matrices
         """
         response = self.app.post('/math/matrixmultiplication', json={"matrices": {"foo": "bar"}})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
         self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
                                                          'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
                                                          ', matrix_2, ..., matrix_n must be list of lists')
+
+    def test_matrix_multiplication_request_format3(self):
+        """
+        Test '/math/matrixmultiplication' request body should contain at least two operands in matrices
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"matrices": []})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'], 'At least two matrices are required for multiplication')
 
 
 if __name__ == '__main__':
