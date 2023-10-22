@@ -219,3 +219,33 @@ def solve_quadratic_equation():
             "result": None,
             "meta": {"error": "Operands (a, b, c) should be either an int or a float"}
         }), HTTPStatus.BAD_REQUEST
+
+    # Calculate the discriminant (b^2 - 4ac).
+    discriminant = b ** 2 - 4 * a * c
+
+    if discriminant > 0:
+        # Two real and distinct solutions.
+        x1 = (-b + discriminant ** 0.5) / (2 * a)
+        x2 = (-b - discriminant ** 0.5) / (2 * a)
+        result = {'x1': x1, 'x2': x2}
+        meta = "Two real and distinct solutions as (b^2 - 4ac) > 0"
+
+    elif discriminant == 0:
+        # One real solution (a repeated root).
+        x = -b / (2 * a)
+        result = {'x': x}
+        meta = "One real solution as (b^2 - 4ac) = 0"
+
+    else:
+        # No real solution (complex roots).
+        real_part = -b / (2 * a)
+        imaginary_part = (-discriminant) ** 0.5 / (2 * a)
+        result = {'real_part': real_part, 'imaginary_part': imaginary_part}
+        meta = "No real solution, it contains complex roots as (b^2 - 4ac) < 0"
+
+    return jsonify({
+        "result": result,
+        "meta": {
+            "detail": meta
+        }
+    }), HTTPStatus.OK
