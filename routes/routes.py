@@ -204,3 +204,25 @@ def matrix_multiplication():
             "result": None,
             "meta": {"error": "At least two matrices are required for multiplication"}
         }), HTTPStatus.BAD_REQUEST
+
+    # Checking if operand is of the correct format
+    for matrix in matrices:
+        if not isinstance(matrix, list) or not matrix:
+            return jsonify({
+                "result": None,
+                "meta": {"error": "A matrix can't be empty or a matrix should be a list of lists of integers/floats"}
+            }), HTTPStatus.BAD_REQUEST
+
+        for row in matrix:
+            if not isinstance(row, list) or len(row) == 0:
+                return jsonify({
+                    "result": None,
+                    "meta": {"error": "A matrix should be a list of lists of integers/floats"}
+                }), HTTPStatus.BAD_REQUEST
+
+            for el in row:
+                if not isinstance(el, int) and not isinstance(el, float):
+                    return jsonify({
+                        "result": None,
+                        "meta": {"error": "A matrix should be a list of lists of integers/floats"}
+                    }), HTTPStatus.BAD_REQUEST
