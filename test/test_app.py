@@ -132,5 +132,27 @@ class AppTests(unittest.TestCase):
             [6, 6]
         ])
 
+    # ----------------------------- Matrix Multiplication ----------------------------------------------
+    def test_matrix_multiplication_request_format1(self):
+        """
+        Test if '/math/matrixmultiplication' request contains data in json format
+        """
+        response = self.app.post('/math/matrixmultiplication')
+
+        # assert statements
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
+                                                         'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
+                                                         ', matrix_2, ..., matrix_n must be list of lists')
+
+    def test_matrix_multiplication_request_format2(self):
+        """
+        Test if '/math/matrixmultiplication' request contains the correct format for key matrices
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"matrices": {"foo": "bar"}})
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
+                                                         'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
+                                                         ', matrix_2, ..., matrix_n must be list of lists')
+
+
 if __name__ == '__main__':
     unittest.main()
