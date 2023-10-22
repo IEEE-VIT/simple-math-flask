@@ -185,6 +185,11 @@ def matrix_addition():
 
 @router.route("/matrixmultiplication", methods=['POST'])
 def matrix_multiplication():
+    """
+    Multiply two or more matrices and return the resultant matrix.
+    It takes a list of matrices in request body. Each matrix should
+    be a list of lists and contains only int or float values.
+    """
     # Checking if request body is of correct format
     try:
         body = request.json
@@ -195,7 +200,7 @@ def matrix_multiplication():
             "result": None,
             "meta": {
                 "error": "The request must be a JSON of the following format: { matrices: [matrix_1, matrix_2, ..., "
-                         "matrix_n] } \n Here matrix_1, matrix_2, ..., matrix_n must be list of lists"}
+                         "matrix_n] } Here matrix_1, matrix_2, ..., matrix_n must be list of lists"}
         }), HTTPStatus.BAD_REQUEST
 
     # Checking if there are at least 2 matrices
