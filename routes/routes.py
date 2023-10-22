@@ -191,3 +191,20 @@ def solve_quadratic_equation():
     which represents the coefficients of quadratic equation and calculate the solution
     based on discriminant (b^2 - 4ac).
     """
+
+    # Checking if request body is of correct format and contains the correct operand keys
+    try:
+        body = request.get_json()
+        data = body['data']
+        assert isinstance(data, dict)
+
+        a = data['a']
+        b = data['b']
+        c = data['c']
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": {
+                "error": "The request must be a JSON of the following format: { data: { a: <value>, b: <value>,"
+                         "  c: <value>} }"}
+        }), HTTPStatus.BAD_REQUEST
