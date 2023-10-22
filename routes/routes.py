@@ -181,3 +181,8 @@ def matrix_addition():
         "result": result_mat,
         "meta": {}
     }), HTTPStatus.OK
+
+
+@router.route("/matrixmultiplication", methods=['POST'])
+def matrix_multiplication():
+    pass
