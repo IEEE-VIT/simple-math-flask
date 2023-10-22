@@ -213,6 +213,23 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.status, 400)
         self.assertEqual(response.json['meta']['error'], "A matrix row should contain either an int or float")
 
+    def test_matrix_multiplication_operand_format4(self):
+        """
+        Test '/math/matrixmultiplication' for matrix dimensions for multiplications
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"data": {
+            "matrices": [
+                [[1, 3]],
+                [[1, 2]]
+            ]
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'], "Matrix dimensions are not compatible for "
+                                                         "multiplication! i.e. The columns of first matrix should"
+                                                         " be equal to the rows of 2nd matrix and so on.")
+
 
 if __name__ == '__main__':
     unittest.main()
