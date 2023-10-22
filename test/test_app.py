@@ -196,8 +196,22 @@ class AppTests(unittest.TestCase):
 
         # assert statements
         self.assertEqual(response.status, 400)
-        self.assertEqual(response.json['meta']['error'], "A matrix row can't be Empty or A matrix should be a "
-                                                         "list of lists of integers/floats")
+        self.assertEqual(response.json['meta']['error'], "A matrix row can't be Empty or A matrix row should be a list")
+
+    def test_matrix_multiplication_operand_format3(self):
+        """
+        Test '/math/matrixmultiplication' for a matrix row should contain either an int or float
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"data": {
+            "matrices": [
+                [[1, 3], ["a"]],
+                [[1, 2], [2, 4]]
+            ]
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'], "A matrix row should contain either an int or float")
 
 
 if __name__ == '__main__':
