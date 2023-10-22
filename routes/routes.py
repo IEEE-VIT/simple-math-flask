@@ -226,3 +226,28 @@ def matrix_multiplication():
                         "result": None,
                         "meta": {"error": "A matrix should be a list of lists of integers/floats"}
                     }), HTTPStatus.BAD_REQUEST
+
+    matrix_a = matrices[0]
+    for matrix_b in matrices[1:]:
+        rows_a, cols_a = len(matrix_a), len(matrix_a[0])
+        rows_b, cols_b = len(matrix_b), len(matrix_b[0])
+
+        if cols_a != rows_b:
+            return jsonify({
+                "result": None,
+                "meta": {"error": "Matrix dimensions are not compatible for multiplication! i.e. The columns of first"
+                                  " matrix should be equal to the rows of 2nd matrix and so on."}
+            }), HTTPStatus.BAD_REQUEST
+
+        _result = [[0 for _ in range(cols_b)] for _ in range(rows_a)]
+
+        for i in range(rows_a):
+            for j in range(cols_b):
+                for k in range(cols_a):
+                    _result[i][j] += matrix_a[i][k] * matrix_b[k][j]
+        matrix_a = _result
+
+    return jsonify({
+        "result": matrix_a,
+        "meta": {}
+    }), HTTPStatus.OK
