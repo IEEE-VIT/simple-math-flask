@@ -168,6 +168,18 @@ class AppTests(unittest.TestCase):
                          'The request must be a JSON of the following format: { data: { a: <value>, b: <value>, '
                          'c: <value>} }')
 
+    def test_quadratic_operand_format(self):
+        response = self.app.post('/math/quadraticequation', json={"data": {
+            "a": "2",
+            "b": "1",
+            "c": []
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'],
+                         'Operands (a, b, c) should be either an int or a float')
+
 
 if __name__ == '__main__':
     unittest.main()
