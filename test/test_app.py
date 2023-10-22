@@ -167,6 +167,22 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.status, 400)
         self.assertEqual(response.json['meta']['error'], 'At least two matrices are required for multiplication')
 
+    def test_matrix_multiplication_operand_format1(self):
+        """
+        Test '/math/matrixmultiplication' for a matrix should be a list of lists and can't be empty
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"data": {
+            "matrices": [
+                [],
+                "foo"
+            ]
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, 400)
+        self.assertEqual(response.json['meta']['error'], "A matrix can't be empty or a matrix should be a list "
+                                                         "of lists of integers/floats")
+
 
 if __name__ == '__main__':
     unittest.main()
