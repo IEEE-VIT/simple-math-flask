@@ -181,3 +181,8 @@ def matrix_addition():
         "result": result_mat,
         "meta": {}
     }), HTTPStatus.OK
+
+
+@router.route("/quadraticequation", methods=['POST'])
+def solve_quadratic_equation():
+    pass
