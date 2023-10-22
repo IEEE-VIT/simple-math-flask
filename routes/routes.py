@@ -197,3 +197,10 @@ def matrix_multiplication():
                 "error": "The request must be a JSON of the following format: { matrices: [matrix_1, matrix_2, ..., "
                          "matrix_n] } \n Here matrix_1, matrix_2, ..., matrix_n must be list of lists"}
         }), HTTPStatus.BAD_REQUEST
+
+    # Checking if there are at least 2 matrices
+    if len(matrices) < 2:
+        return jsonify({
+            "result": None,
+            "meta": {"error": "At least two matrices are required for multiplication"}
+        }), HTTPStatus.BAD_REQUEST
