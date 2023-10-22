@@ -208,3 +208,14 @@ def solve_quadratic_equation():
                 "error": "The request must be a JSON of the following format: { data: { a: <value>, b: <value>,"
                          "  c: <value>} }"}
         }), HTTPStatus.BAD_REQUEST
+
+    # Checking if operand is of the correct format
+    try:
+        assert isinstance(a, int) or isinstance(a, float)
+        assert isinstance(b, int) or isinstance(b, float)
+        assert isinstance(c, int) or isinstance(c, float)
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": {"error": "Operands (a, b, c) should be either an int or a float"}
+        }), HTTPStatus.BAD_REQUEST
