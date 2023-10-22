@@ -185,4 +185,9 @@ def matrix_addition():
 
 @router.route("/quadraticequation", methods=['POST'])
 def solve_quadratic_equation():
-    pass
+    """
+    Solves a quadratic equation of the form ax^2 + bx + c = 0 and returns the solution.
+    It takes three values a, b and c (can be an integer or float) in data dictionary
+    which represents the coefficients of quadratic equation and calculate the solution
+    based on discriminant (b^2 - 4ac).
+    """
