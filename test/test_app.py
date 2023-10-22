@@ -230,6 +230,23 @@ class AppTests(unittest.TestCase):
                                                          "multiplication! i.e. The columns of first matrix should"
                                                          " be equal to the rows of 2nd matrix and so on.")
 
+    def test_matrix_multiplication_correctness(self):
+        """
+        Test '/math/matrixmultiplication' for correct output
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"data": {
+            "matrices": [
+                [[1, 3]],
+                [[1, 2], [3, 4]],
+                [[6, 5], [4, 3]]
+            ]
+        }})
+        expected_result = [[116, 92]]
+
+        # assert statements
+        self.assertEqual(response.status, 200)
+        self.assertEqual(response.json['meta']['result'], expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
