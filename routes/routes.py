@@ -185,4 +185,15 @@ def matrix_addition():
 
 @router.route("/matrixmultiplication", methods=['POST'])
 def matrix_multiplication():
-    pass
+    # Checking if request body is of correct format
+    try:
+        body = request.json
+        matrices = body['matrices']
+        assert isinstance(matrices, list)
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": {
+                "error": "The request must be a JSON of the following format: { matrices: [matrix_1, matrix_2, ..., "
+                         "matrix_n] } \n Here matrix_1, matrix_2, ..., matrix_n must be list of lists"}
+        }), HTTPStatus.BAD_REQUEST
