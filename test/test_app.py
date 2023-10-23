@@ -22,6 +22,60 @@ class AppTests(unittest.TestCase):
 
     # Add the test_cases for various functionality here
 
+    def test_addition_request_format1(self):
+        response = self.app.post('/math/add',json={"data":{}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],'The request must contain exactly two operands.')
+        self.assertEqual(response.json['result'],None)
+
+    def test_addition_request_format2(self):
+        response = self.app.post('/math/add',json={"data" : {"param1":13, "param2": 33, "param3" : 44}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must contain exactly two operands.')
+        self.assertEqual(response.json['result'],None)
+    
+    def test_addition_operand_format1(self):
+        response = self.app.post('/math/add',json = {"data":{"foo": "bar"}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+        self.assertEqual(response.json['result'],None)
+        
+    def test_addition_operand_format2(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 2, "param4": 5}})
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+        self.assertEqual(response.json['result'],None)
+
+    def test_addition_operand_format3(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": "2", "param2": 5}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "Operands param1 and param2 should be either an int or a float")
+        self.assertEqual(response.json['result'],None)
+    
+    def test_addition_operand_format4(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 2, "param2": 5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 7)
+
+    def test_addition_operand_format5(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 5.2, "param2": 5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 10.2)
+        
+    def test_addition_operand_format6(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 85.2, "param2": 92.5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 177.7)
+            
     def test_multiplication_request_format1(self):
         response = self.app.post('/math/multiply')
         self.assertEqual(response.json['meta']['error'],
@@ -102,14 +156,14 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.json['meta']['error'], 'The request must contain exactly two operands.')
 
     def test_exponentiation_operand_format(self):
-        response = self.app.post('/math/matrixaddition', json={"data": {
+        response = self.app.post('/math/exponentiation', json={"data": {
             "param1": "foo",
             "param2": "bar"
         }})
         self.assertEqual(response.json['meta']['error'], 'Operands must be integers/floats.')
 
     def test_exponentiation_correctness(self):
-        response = self.app.post('/math/matrixaddition', json={"data": {
+        response = self.app.post('/math/exponentiation', json={"data": {
             "param1": 5,
             "param2": 3
         }})
