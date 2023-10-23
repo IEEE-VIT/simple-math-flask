@@ -96,8 +96,54 @@ def multiply():
 
 @router.route("/division",methods=['POST'])
 def division():
-    #Add logic here
-    return
+    # Checking if request body is of correct format
+    try:
+        body = request.json
+        data = body['data']
+        assert isinstance(data, dict)
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
+        }), HTTPStatus.BAD_REQUEST
+    
+    # Checking if operand keys in data dictionary is named properly
+    for i in range(1, len(data.keys())+1):
+        if f"param{i}" not in data:
+            return jsonify({
+                "result": None,
+                "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }" }
+            }), HTTPStatus.BAD_REQUEST
+    
+    # Checking if there are exactly 2 operands
+    if len(data.keys()) != 2:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "Division requires exactly 2 operands" }
+        }), HTTPStatus.BAD_REQUEST
+
+    # Checking if operand is of the correct format
+    for i in range(1, len(data.keys())+1):
+        if not isinstance(data[f'param{i}'], int) and not isinstance(data[f'param{i}'], float):
+            return jsonify({
+                "result": None,
+                "meta": { "error": "Operands should be a real number i.e. integer/float" }
+            }), HTTPStatus.BAD_REQUEST
+    
+    # Check if the divisor is zero
+    if data['param2'] == 0:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "Division by zero is not allowed" }
+        }), HTTPStatus.BAD_REQUEST
+    
+    div_res = data["param1"] / data["param2"]
+
+    return jsonify({
+        "result": div_res,
+        "meta": {}
+    }), HTTPStatus.OK
+
 
 @router.route("/exponentiation", methods=['POST'])
 def exponentiation():
@@ -219,4 +265,72 @@ def matrix_addition():
     return jsonify({
         "result": result_mat,
         "meta": {}
+    }), HTTPStatus.OK
+
+
+@router.route("/quadraticequation", methods=['POST'])
+def solve_quadratic_equation():
+    """
+    Solves a quadratic equation of the form ax^2 + bx + c = 0 and returns the solution.
+    It takes three values a, b and c (can be an integer or float) in data dictionary
+    which represents the coefficients of quadratic equation and calculate the solution
+    based on discriminant (b^2 - 4ac).
+    """
+
+    # Checking if request body is of correct format and contains the correct operand keys
+    try:
+        body = request.get_json()
+        data = body['data']
+        assert isinstance(data, dict)
+
+        a = data['a']
+        b = data['b']
+        c = data['c']
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": {
+                "error": "The request must be a JSON of the following format: { data: { a: <value>, b: <value>,"
+                         " c: <value>} }"}
+        }), HTTPStatus.BAD_REQUEST
+
+    # Checking if operand is of the correct format
+    try:
+        assert isinstance(a, int) or isinstance(a, float)
+        assert isinstance(b, int) or isinstance(b, float)
+        assert isinstance(c, int) or isinstance(c, float)
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": {"error": "Operands (a, b, c) should be either an int or a float"}
+        }), HTTPStatus.BAD_REQUEST
+
+    # Calculate the discriminant (b^2 - 4ac).
+    discriminant = b ** 2 - 4 * a * c
+
+    if discriminant > 0:
+        # Two real and distinct solutions.
+        x1 = (-b + discriminant ** 0.5) / (2 * a)
+        x2 = (-b - discriminant ** 0.5) / (2 * a)
+        result = {'x1': x1, 'x2': x2}
+        meta = "Two real and distinct solutions as (b^2 - 4ac) > 0"
+
+    elif discriminant == 0:
+        # One real solution (a repeated root).
+        x = -b / (2 * a)
+        result = {'x': x}
+        meta = "One real solution as (b^2 - 4ac) = 0"
+
+    else:
+        # No real solution (complex roots).
+        real_part = -b / (2 * a)
+        imaginary_part = (-discriminant) ** 0.5 / (2 * a)
+        result = {'real_part': real_part, 'imaginary_part': imaginary_part}
+        meta = "No real solution, it contains complex roots as (b^2 - 4ac) < 0"
+
+    return jsonify({
+        "result": result,
+        "meta": {
+            "detail": meta
+        }
     }), HTTPStatus.OK
