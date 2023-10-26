@@ -20,10 +20,8 @@ class AppTests(unittest.TestCase):
         response = self.app.get('/math/check')
         self.assertEqual(response.data, b'Congratulations! Your app works. :)')
 
-    # Add the test_cases for various functionality here
-
     def test_addition_request_format1(self):
-        response = self.app.post('/math/add',json={"data":{}})
+        response = self.app.post('/math/add')
         
         self.assertEqual(response.status, '400 BAD REQUEST')
         self.assertEqual(response.json['meta']['error'],'The request must contain exactly two operands.')
@@ -75,7 +73,34 @@ class AppTests(unittest.TestCase):
         
         self.assertEqual(response.status, '200 OK')
         self.assertEqual(response.json['result'], 177.7)
-            
+        
+    
+    def test_addition_request_format1(self):
+        response = self.app.post('/math/add')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
+    
+    def test_addition_request_format2(self):
+        response = self.app.post('/math/add', json={ "data": { "foo": "bar" } })
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { param1: <value>, param2: <value> } }')
+
+    def test_addition_request_format3(self):
+        response = self.app.post('/math/add', json={ "data": {} })
+        self.assertEqual(response.json['meta']['error'], 'The request must contain exactly two operands.')
+
+    def test_addition_operand_format(self):
+        response = self.app.post('/math/add', json={ "data": {
+            "param1": "foo",
+            "param2": "bar"
+        } })
+        self.assertEqual(response.json['meta']['error'], 'Operands must be integers/floats.')
+
+    def test_addtion_correctness(self):
+        response = self.app.post('/math/add', json={ "data": {
+            "param1": 7,
+            "param2": 3
+        } })
+        self.assertEqual(response.json['result'], 10)
+
     def test_multiplication_request_format1(self):
         response = self.app.post('/math/multiply')
         self.assertEqual(response.json['meta']['error'],
@@ -233,6 +258,121 @@ class AppTests(unittest.TestCase):
             [6, 6],
             [6, 6]
         ])
+
+
+    # ----------------------------- Matrix Multiplication ----------------------------------------------
+    def test_matrix_multiplication_request_format1(self):
+        """
+        Test if '/math/matrixmultiplication' request contains data in json format
+        """
+        response = self.app.post('/math/matrixmultiplication')
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
+                                                         'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
+                                                         ', matrix_2, ..., matrix_n must be list of lists')
+
+    def test_matrix_multiplication_request_format2(self):
+        """
+        Test if '/math/matrixmultiplication' request contains the correct format for key matrices
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"matrices": {"foo": "bar"}})
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { '
+                                                         'matrices: [matrix_1, matrix_2, ..., matrix_n] } Here matrix_1'
+                                                         ', matrix_2, ..., matrix_n must be list of lists')
+
+    def test_matrix_multiplication_request_format3(self):
+        """
+        Test '/math/matrixmultiplication' request body should contain at least two operands in matrices
+        """
+        response = self.app.post('/math/matrixmultiplication', json={"matrices": []})
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], 'At least two matrices are required for multiplication')
+
+    def test_matrix_multiplication_operand_format1(self):
+        """
+        Test '/math/matrixmultiplication' for a matrix should be a list of lists and can't be empty
+        """
+        response = self.app.post('/math/matrixmultiplication', json={
+            "matrices": [
+                [],
+                "foo"
+            ]})
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "A matrix can't be empty or a matrix should be a list "
+                                                         "of lists of integers/floats")
+
+    def test_matrix_multiplication_operand_format2(self):
+        """
+        Test '/math/matrixmultiplication' for a matrix should be a list of lists and a matrix row can't be empty
+        """
+        response = self.app.post('/math/matrixmultiplication', json={
+            "matrices": [
+                [[1, 3], []],
+                [[1, 2], [2, 4]]
+            ]
+        })
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "A matrix row can't be Empty or A matrix row should be a list")
+
+    def test_matrix_multiplication_operand_format3(self):
+        """
+        Test '/math/matrixmultiplication' for a matrix row should contain either an int or float
+        """
+        response = self.app.post('/math/matrixmultiplication', json={
+            "matrices": [
+                [[1, 3], ["a"]],
+                [[1, 2], [2, 4]]
+            ]
+        })
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "A matrix row should contain either an int or float")
+
+    def test_matrix_multiplication_operand_format4(self):
+        """
+        Test '/math/matrixmultiplication' for matrix dimensions for multiplications
+        """
+        response = self.app.post('/math/matrixmultiplication', json={
+            "matrices": [
+                [[1, 3]],
+                [[1, 2]]
+            ]
+        })
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "Matrix dimensions are not compatible for "
+                                                         "multiplication! i.e. The columns of first matrix should"
+                                                         " be equal to the rows of 2nd matrix and so on.")
+
+    def test_matrix_multiplication_correctness(self):
+        """
+        Test '/math/matrixmultiplication' for correct output
+        """
+        response = self.app.post('/math/matrixmultiplication', json={
+            "matrices": [
+                [[1, 3]],
+                [[1, 2], [3, 4]],
+                [[6, 5], [4, 3]]
+            ]
+        })
+        expected_result = [[116, 92]]
+
+        # assert statements
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], expected_result)
 
     # ------------------------------- SOLVE QUADRATIC EQUATION ----------------------------------------
     def test_quadratic_request_format1(self):
