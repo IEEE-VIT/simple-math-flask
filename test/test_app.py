@@ -211,9 +211,9 @@ class AppTests(unittest.TestCase):
     # ----------------------------- Matrix Multiplication ----------------------------------------------
     def test_matrix_multiplication_request_format1(self):
         """
-        Test if '/math/matrixmultiplication' request contains data in json format
+        Test if '/math/matrix-multiplication' request contains data in json format
         """
-        response = self.app.post('/math/matrixmultiplication')
+        response = self.app.post('/math/matrix-multiplication')
 
         # assert statements
         self.assertEqual(response.status, '400 BAD REQUEST')
@@ -223,9 +223,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_request_format2(self):
         """
-        Test if '/math/matrixmultiplication' request contains the correct format for key matrices
+        Test if '/math/matrix-multiplication' request contains the correct format for key matrices
         """
-        response = self.app.post('/math/matrixmultiplication', json={"matrices": {"foo": "bar"}})
+        response = self.app.post('/math/matrix-multiplication', json={"matrices": {"foo": "bar"}})
 
         # assert statements
         self.assertEqual(response.status, '400 BAD REQUEST')
@@ -235,9 +235,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_request_format3(self):
         """
-        Test '/math/matrixmultiplication' request body should contain at least two operands in matrices
+        Test '/math/matrix-multiplication' request body should contain at least two operands in matrices
         """
-        response = self.app.post('/math/matrixmultiplication', json={"matrices": []})
+        response = self.app.post('/math/matrix-multiplication', json={"matrices": []})
 
         # assert statements
         self.assertEqual(response.status, '400 BAD REQUEST')
@@ -245,9 +245,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_operand_format1(self):
         """
-        Test '/math/matrixmultiplication' for a matrix should be a list of lists and can't be empty
+        Test '/math/matrix-multiplication' for a matrix should be a list of lists and can't be empty
         """
-        response = self.app.post('/math/matrixmultiplication', json={
+        response = self.app.post('/math/matrix-multiplication', json={
             "matrices": [
                 [],
                 "foo"
@@ -260,9 +260,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_operand_format2(self):
         """
-        Test '/math/matrixmultiplication' for a matrix should be a list of lists and a matrix row can't be empty
+        Test '/math/matrix-multiplication' for a matrix should be a list of lists and a matrix row can't be empty
         """
-        response = self.app.post('/math/matrixmultiplication', json={
+        response = self.app.post('/math/matrix-multiplication', json={
             "matrices": [
                 [[1, 3], []],
                 [[1, 2], [2, 4]]
@@ -275,9 +275,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_operand_format3(self):
         """
-        Test '/math/matrixmultiplication' for a matrix row should contain either an int or float
+        Test '/math/matrix-multiplication' for a matrix row should contain either an int or float
         """
-        response = self.app.post('/math/matrixmultiplication', json={
+        response = self.app.post('/math/matrix-multiplication', json={
             "matrices": [
                 [[1, 3], ["a"]],
                 [[1, 2], [2, 4]]
@@ -290,9 +290,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_operand_format4(self):
         """
-        Test '/math/matrixmultiplication' for matrix dimensions for multiplications
+        Test '/math/matrix-multiplication' for matrix dimensions for multiplications
         """
-        response = self.app.post('/math/matrixmultiplication', json={
+        response = self.app.post('/math/matrix-multiplication', json={
             "matrices": [
                 [[1, 3]],
                 [[1, 2]]
@@ -307,9 +307,9 @@ class AppTests(unittest.TestCase):
 
     def test_matrix_multiplication_correctness(self):
         """
-        Test '/math/matrixmultiplication' for correct output
+        Test '/math/matrix-multiplication' for correct output
         """
-        response = self.app.post('/math/matrixmultiplication', json={
+        response = self.app.post('/math/matrix-multiplication', json={
             "matrices": [
                 [[1, 3]],
                 [[1, 2], [3, 4]],

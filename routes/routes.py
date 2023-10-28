@@ -37,7 +37,7 @@ def matrix_addition():
     return AddViews.add_matrices()
 
 
-@router.route("/matrixmultiplication", methods=['POST'])
+@router.route("/matrix-multiplication", methods=['POST'])
 def matrix_multiplication():
     return MultiplyViews.multiply_matrices()
 
