@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from routes.routes import router
+from routes.routers import router
 
 PORT = 5000
 
