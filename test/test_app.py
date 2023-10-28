@@ -325,9 +325,9 @@ class AppTests(unittest.TestCase):
     # ------------------------------- SOLVE QUADRATIC EQUATION ----------------------------------------
     def test_quadratic_request_format1(self):
         """
-        Test if '/math/quadraticequation' request contains data in json format
+        Test if '/math/quadratic-equation' request contains data in json format
         """
-        response = self.app.post('/math/quadraticequation')
+        response = self.app.post('/math/quadratic-equation')
 
         # assert statements
         self.assertEqual(response.status, '400 BAD REQUEST')
@@ -337,9 +337,9 @@ class AppTests(unittest.TestCase):
 
     def test_quadratic_request_format2(self):
         """
-        Test if '/math/quadraticequation' request contains the correct keys in data
+        Test if '/math/quadratic-equation' request contains the correct keys in data
         """
-        response = self.app.post('/math/quadraticequation', json={"data": {"foo": "bar"}})
+        response = self.app.post('/math/quadratic-equation', json={"data": {"foo": "bar"}})
 
         # assert statements
         self.assertEqual(response.status, '400 BAD REQUEST')
@@ -349,9 +349,9 @@ class AppTests(unittest.TestCase):
 
     def test_quadratic_operand_format(self):
         """
-        Test if '/math/quadraticequation' request data keys are of correct format
+        Test if '/math/quadratic-equation' request data keys are of correct format
         """
-        response = self.app.post('/math/quadraticequation', json={"data": {
+        response = self.app.post('/math/quadratic-equation', json={"data": {
             "a": "2",
             "b": "1",
             "c": []
@@ -364,9 +364,9 @@ class AppTests(unittest.TestCase):
 
     def test_quadratic_correctness(self):
         """
-        Test if '/math/quadraticequation' request for correct output
+        Test if '/math/quadratic-equation' request for correct output
         """
-        response = self.app.post('/math/quadraticequation', json={"data": {
+        response = self.app.post('/math/quadratic-equation', json={"data": {
             "a": 1,
             "b": -3,
             "c": 2

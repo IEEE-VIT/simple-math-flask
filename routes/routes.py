@@ -40,6 +40,6 @@ def matrix_multiplication():
     return MultiplyViews.multiply_matrices()
 
 
-@router.route("/quadraticequation", methods=['POST'])
+@router.route("/quadratic-equation", methods=['POST'])
 def solve_quadratic_equation():
     return EquationViews.quadratic_equation()
