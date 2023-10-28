@@ -32,7 +32,7 @@ def exponentiation():
     return MultiplyViews.exponent()
 
 
-@router.route("/matrixaddition", methods=['POST'])
+@router.route("/matrix-addition", methods=['POST'])
 def matrix_addition():
     return AddViews.add_matrices()
 
