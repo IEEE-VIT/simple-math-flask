@@ -455,3 +455,60 @@ def hcflcm():
         "result": result,
         "meta": {}
     }), HTTPStatus.OK
+
+@router.route("/factorial", methods=["POST"])
+def factorial():
+     # Checking if request body is of correct format  
+
+    try:
+        body = request.json
+        data = body['data']
+        assert isinstance(data, dict)
+    except Exception:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value> } }" }
+        }), HTTPStatus.BAD_REQUEST
+    
+    # Checking if operand keys in data dictionary is named properly
+    for i in range(1, len(data.keys())+1):
+        if f"param{i}" not in data:
+            return jsonify({
+                "result": None,
+                "meta": { "error": "The request must be a JSON of the following format: { data: { param1: <value> } }" }
+            }), HTTPStatus.BAD_REQUEST
+        
+    # Checking if the operand is not more 1
+    if len(data.keys()) != 1:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "The request must contain exactly one operand." }
+        }), HTTPStatus.BAD_REQUEST
+    
+    # Checking if operand are of the correct type
+    if (not isinstance(data["param1"], int)):
+        return jsonify({
+            "result": None,
+            "meta": { "error": "Operand must be integer only." }
+        }), HTTPStatus.BAD_REQUEST
+    
+     # Checking if the operand is less than zero
+    if data['param1'] < 0:
+        return jsonify({
+            "result": None,
+            "meta": { "error": "Operand must be positive integer only." }
+        }), HTTPStatus.BAD_REQUEST
+    
+    # Result of factorial
+    if data["param1"] == 0:
+        result = 1
+        
+    else:
+        result = 1
+        for i in range(1, data["param1"] + 1):
+            result *= i
+
+    return jsonify({
+        "result": result,
+        "meta": {}
+    }), HTTPStatus.OK
