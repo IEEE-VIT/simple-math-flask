@@ -20,8 +20,60 @@ class AppTests(unittest.TestCase):
         response = self.app.get('/math/check')
         self.assertEqual(response.data, b'Congratulations! Your app works. :)')
 
+    def test_addition_request_format1(self):
+        response = self.app.post('/math/add')
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],'The request must contain exactly two operands.')
+        self.assertEqual(response.json['result'],None)
 
-    #Add the test_cases for various functionality here
+    def test_addition_request_format2(self):
+        response = self.app.post('/math/add',json={"data" : {"param1":13, "param2": 33, "param3" : 44}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must contain exactly two operands.')
+        self.assertEqual(response.json['result'],None)
+    
+    def test_addition_operand_format1(self):
+        response = self.app.post('/math/add',json = {"data":{"foo": "bar"}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+        self.assertEqual(response.json['result'],None)
+        
+    def test_addition_operand_format2(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 2, "param4": 5}})
+        self.assertEqual(response.json['meta']['error'],
+                         'The request must be a JSON of the following format: { data: { param1: <value>, ... param<n>: <value> } }')
+        self.assertEqual(response.json['result'],None)
+
+    def test_addition_operand_format3(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": "2", "param2": 5}})
+        
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], "Operands param1 and param2 should be either an int or a float")
+        self.assertEqual(response.json['result'],None)
+    
+    def test_addition_operand_format4(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 2, "param2": 5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 7)
+
+    def test_addition_operand_format5(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 5.2, "param2": 5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 10.2)
+        
+    def test_addition_operand_format6(self):
+        response = self.app.post('/math/add',json = {"data":{"param1": 85.2, "param2": 92.5}})
+        
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], 177.7)
+        
     
     def test_addition_request_format1(self):
         response = self.app.post('/math/add')
@@ -48,7 +100,7 @@ class AppTests(unittest.TestCase):
             "param2": 3
         } })
         self.assertEqual(response.json['result'], 10)
-        
+
     def test_multiplication_request_format1(self):
         response = self.app.post('/math/multiply')
         self.assertEqual(response.json['meta']['error'],
@@ -129,14 +181,14 @@ class AppTests(unittest.TestCase):
         self.assertEqual(response.json['meta']['error'], 'The request must contain exactly two operands.')
 
     def test_exponentiation_operand_format(self):
-        response = self.app.post('/math/matrixaddition', json={"data": {
+        response = self.app.post('/math/exponentiation', json={"data": {
             "param1": "foo",
             "param2": "bar"
         }})
         self.assertEqual(response.json['meta']['error'], 'Operands must be integers/floats.')
 
     def test_exponentiation_correctness(self):
-        response = self.app.post('/math/matrixaddition', json={"data": {
+        response = self.app.post('/math/exponentiation', json={"data": {
             "param1": 5,
             "param2": 3
         }})
@@ -406,6 +458,82 @@ class AppTests(unittest.TestCase):
             "param1": 5
         } })
         self.assertEqual(response.json['result'], 120)
+
+    def test_test_hcflcm_format1(self):
+        """
+        Test if '/math/hcflcm' request contains the correct keys in data
+        """
+        response = self.app.post('/math/hcflcm')
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { a: <value>, b: <value>} }')
+        
+    def test_test_hcflcm_format2(self):
+        """
+        Test if '/math/hcflcm' request contains the correct keys in data
+        """
+        response = self.app.post('/math/hcflcm', json={"data": {"foo": "bar"}})
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'], 'The request must be a JSON of the following format: { data: { a: <value>, b: <value>} }')
+    
+    def test_hcflcm_operand_format(self):
+        """
+        Test if '/math/hcflcm' request data keys are of correct format
+        """
+        response = self.app.post('/math/hcflcm', json={"data": {
+            "a": "2",
+            "b": 9.7
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, '400 BAD REQUEST')
+        self.assertEqual(response.json['meta']['error'],
+                         'Operands a, b should be either an int Only')
+
+    def test_hcflcm_correctness1(self):
+        """
+        Test if '/math/hcflcm' request for correct output
+        """
+        response = self.app.post('/math/hcflcm', json={"data": {
+            "a": 13,
+            "b": 23
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], {'hcf': 1, 'lcm': 299})
+        self.assertEqual(response.json['meta'], {})
+    
+    def test_hcflcm_correctness2(self):
+        """
+        Test if '/math/hcflcm' request for correct output
+        """
+        response = self.app.post('/math/hcflcm', json={"data": {
+            "a": 20,
+            "b": -8
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], {"hcf": 4, "lcm": 40})
+        self.assertEqual(response.json['meta'], {})    
+
+    def test_hcflcm_correctness2(self):
+        """
+        Test if '/math/hcflcm' request for correct output
+        """
+        response = self.app.post('/math/hcflcm', json={"data": {
+            "a": -6,
+            "b": -8
+        }})
+
+        # assert statements
+        self.assertEqual(response.status, '200 OK')
+        self.assertEqual(response.json['result'], {"hcf": 2,"lcm": 24})
+        self.assertEqual(response.json['meta'], {}) 
 
     def test_test_hcflcm_format1(self):
         """
