@@ -1,4 +1,18 @@
-/__pycache__
-/routes/__pycache__
-/.venv
-.idea/
+# files
+.vscode
+__pycache__
+.idea
+venv
+
+# exclude everything
+media/media/**
+media/files/**
+media/photos/**
+media/profilephotos/**
+
+# exception to the rule
+!media/media/.gitkeep
+!media/files/.gitkeep
+!media/photos/.gitkeep
+!media/profilephotos/.gitkeep
+
