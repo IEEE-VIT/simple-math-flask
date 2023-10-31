@@ -43,3 +43,8 @@ def matrix_multiplication():
 @router.route("/quadratic-equation", methods=['POST'])
 def solve_quadratic_equation():
     return EquationViews.quadratic_equation()
+
+
+@router.route("/factorial", methods=["POST"])
+def factorial():
+    return MultiplyViews.calculate_factorial()
