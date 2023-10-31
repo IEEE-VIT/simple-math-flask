@@ -48,3 +48,8 @@ def solve_quadratic_equation():
 @router.route("/factorial", methods=["POST"])
 def factorial():
     return MultiplyViews.calculate_factorial()
+
+
+@router.route("/hcf-lcm", methods=['POST'])
+def hcf_lcm():
+    return MultiplyViews.calculate_hcf_lcm()

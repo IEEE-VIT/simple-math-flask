@@ -233,3 +233,47 @@ class MultiplyViews:
             "result": result,
             "meta": {}
         }), HTTPStatus.OK
+
+    @staticmethod
+    def calculate_hcf_lcm():
+        # Checking if request body is of correct format and contains the correct operand keys
+        try:
+            body = request.get_json()
+            data = body['data']
+            assert isinstance(data, dict)
+
+            a = data['a']
+            b = data['b']
+
+        except Exception:
+            return jsonify({
+                "result": None,
+                "meta": {
+                    "error": "The request must be a JSON of the following format: { data: { a: <value>, b: <value>} }"
+                }
+            }), HTTPStatus.BAD_REQUEST
+
+        # Checking if operand is of the correct format
+        try:
+            assert isinstance(b, int)
+            assert isinstance(a, int)
+
+        except Exception:
+            return jsonify({
+                "result": None,
+                "meta": {"error": "Operands a, b should be either an int Only"}
+            }), HTTPStatus.BAD_REQUEST
+
+        # Changing the Negative Numbers to Positive.
+        if a < 1:
+            a = a * -1
+        if b < 1:
+            b = b * -1
+
+        lcm = abs(a * b) // gcd(a, b)
+        result = {"hcf": gcd(a, b), "lcm": lcm}
+
+        return jsonify({
+            "result": result,
+            "meta": {}
+        }), HTTPStatus.OK
